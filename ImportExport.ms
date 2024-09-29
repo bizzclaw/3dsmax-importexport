@@ -1,4 +1,4 @@
-InDir = "I:\Sync\Fallout_4_Extracted\Data\Meshes\Actors\MirelurkQueen" -- will not get files in the immediate folder for now
+InDir = "C:\Users\Doubl\Desktop\mosin\Meshes\Actors\Character\Animations\Weapon\MosinAnims\Mosin" -- will not get files in the immediate folder for now
 
 InputType = "hkx" -- tested and working with fbx and hkx
 OutputType = "smd" -- only works with SMD for now
@@ -16,7 +16,7 @@ for f in dir_array do
 my_files
 )
 
-getFilesRecursive InDir "*." + InputType
+getFilesRecursive InDir "*.hkx"
 
 FbxImporterSetParam "ScaleConversion" false
 FbxImporterSetParam "ScaleFactor" 1.0
@@ -25,20 +25,20 @@ FbxImporterSetParam "ImportBoneAsDummy" false
 FbxImporterSetParam "Mode" #exmerge
 
 for file in my_files do (
-	animationRange = interval 0 1
-	ImportFile file #noPrompt
-	local NewFileName = file
-	local extensionPos = findString NewFileName "." + InputType
-	extensionPos = extensionPos - 1
-	
-	NewFileName = substring NewFileName 1 extensionPos
+    animationRange = interval 0 1
+    ImportFile file #noPrompt
+    local NewFileName = file
+    local extensionPos = findString NewFileName ".hkx"
+    extensionPos = extensionPos - 1
+    
+    NewFileName = substring NewFileName 1 extensionPos
 
-	NewFileName = NewFileName + "." + OutputType
-	local frames = (animationRange.end as integer)/160
-	--WBSMDExport NewFileName false 1 false 0 frames false false false false
+    NewFileName = NewFileName + ".smd"
+    local frames = (animationRange.end as integer)/160
+    --WBSMDExport NewFileName false 1 false 0 frames false false false false
     -- WBSMDExport NewFileName false 1 false 0 frames false false false false
     WBSMDExport NewFileName false 1 false 1 0 frames false false false false
 
-	print(NewFileName)
+    print(NewFileName)
 )
 print("done")
